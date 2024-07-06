@@ -1,0 +1,35 @@
+   public int find(int a, int[] parent)
+    {
+        if(a==parent[a])
+            return a;
+        
+        parent[a]=find(parent[a] , parent);
+        
+        return parent[a];
+        
+    }
+    
+    public void merge(int a,int b, int[] rank,int[] parent)
+    {
+        int pa = find(a,parent);
+        int pb = find(b,parent);
+        
+        if(pa!=pb)
+        {
+            
+            if(rank[pa]>rank[pb])
+            {
+                parent[pb]=pa;
+                rank[pa]++;
+            }
+            else 
+            {
+                parent[pa]=pb;
+                rank[pb]++;
+            }
+            
+        }
+        
+        
+        
+    }
