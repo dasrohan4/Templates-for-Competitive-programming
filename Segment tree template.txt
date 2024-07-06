@@ -1,0 +1,75 @@
+class segTree{
+List<Integer> seg;
+segTree(int n)
+{
+    seg = new ArrayList<>();
+    for(int i=0;i<4*n;i++)
+    {
+        seg.add(0);
+    }
+}
+public void build(int idx, int low , int high , int[] nums)
+{
+    if(low==high)
+    {
+        seg.set(idx,nums[low]);
+        return;
+    }
+
+    int mid = (low+high)>>1;
+
+    build(2*idx+1 , low , mid , nums);
+    build(2*idx+2 , mid+1 , high , nums);
+
+    seg.set(idx,seg.get(2*idx+1) + seg.get(2*idx+2));
+}
+public int update(int target , int idx,int val, int low , int high)
+{
+
+    if(low == high)
+    {
+        seg.set(idx,val);
+        return val;
+    }
+
+    int mid = (low+high)>>1;
+        
+    if(target >mid)
+    {
+        int right = update(target , 2*idx+2 , val  , mid+1,high);
+        
+        seg.set(idx ,seg.get(2*idx+1) + right);
+        return seg.get(idx);
+
+    }
+    else
+    {
+        int left = update(target , 2*idx+1 , val , low , mid);
+        seg.set(idx , (seg.get(2*idx+2) + left));
+        return seg.get(idx);
+    }
+
+
+}
+public int sumRange(int low , int high , int l , int r,int idx)
+{
+    if(r<low || l>high)
+    {
+        return 0;
+    }
+
+    if(low>=l && high<=r)
+    {
+        return seg.get(idx);
+    }
+    int mid = (low+high)>>1;
+    int left = sumRange(low , mid , l , r,2*idx+1);
+    int right = sumRange(mid+1,high,l,r,2*idx+2);
+    return left+right;
+}
+
+
+
+};
+
+
