@@ -1,0 +1,96 @@
+class Node{
+
+        Node[] links = new Node[26];
+        
+        Boolean flag = false;
+
+        int idx=-1;
+
+        int rev=-1;
+
+
+};
+class Trie {
+
+    public Node root;
+
+    Trie()
+    {
+        root=new Node();
+    }
+
+    public void insert(String s , int idx)
+    {
+        Node node = root;
+        for(int i=0;i<s.length();i++)
+        {
+            if(node.links[s.charAt(i)-'a']==null)
+            {
+                node.links[s.charAt(i)-'a'] = new Node();
+            }
+            node = node.links[s.charAt(i)-'a'];
+        }
+
+        node.flag=true;
+        node.idx = idx;
+
+    }
+
+    public int search(String s)
+    {
+        Node node = root;
+
+        for(int i=0;i<s.length();i++)
+        {
+            if(node.links[s.charAt(i)-'a']==null)
+            {
+                return -1;
+            }
+            node = node.links[s.charAt(i)-'a'];
+        }
+        
+        if(node.flag==false)
+        {
+            return -1;
+        }
+        else
+        return node.idx;
+
+
+    }
+
+    public Node modifiedSearch(Node prev , char ch)
+    {
+        if(prev==null)
+        {
+            return null;
+        }
+        
+        if(prev.links[ch-'a']!=null)
+        {
+            return prev.links[ch-'a'];
+        }
+        return null;
+
+
+    }
+
+    public void setReverse(String s,int index)
+    {
+        Node node=root;
+
+        for(int i=0;i<s.length();i++)
+        {
+            if(node==null)
+            return;
+            node = node.links[s.charAt(i)-'a'];
+        }
+        if(node==null)
+            return;
+
+        node.rev = index;
+        return;
+
+    } 
+
+};
