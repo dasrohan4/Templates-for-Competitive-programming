@@ -1,0 +1,42 @@
+import java.util.Comparator;
+import java.util.PriorityQueue;
+
+class Node {
+    int val1;
+    int val2;
+    int val3;
+
+    public Node(int val1, int val2, int val3) {
+        this.val1 = val1;
+        this.val2 = val2;
+        this.val3 = val3;
+    }
+
+    @Override
+    public String toString() {
+        return "(" + val1 + ", " + val2 + ", " + val3 + ")";
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        // Create a priority queue with a custom comparator to sort based on val2
+        PriorityQueue<Node> minHeap = new PriorityQueue<>(new Comparator<Node>() {
+            @Override
+            public int compare(Node n1, Node n2) {
+                return Integer.compare(n1.val2, n2.val2);
+            }
+        });
+
+        // Add nodes to the priority queue
+        minHeap.add(new Node(1, 5, 9));
+        minHeap.add(new Node(2, 3, 7));
+        minHeap.add(new Node(3, 8, 6));
+        minHeap.add(new Node(4, 1, 4));
+
+        // Remove nodes from the priority queue
+        while (!minHeap.isEmpty()) {
+            System.out.println(minHeap.poll());
+        }
+    }
+}
